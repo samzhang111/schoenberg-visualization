@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <meta charset="utf-8">
 <title>Streamgraph</title>
@@ -18,7 +19,7 @@ button {
 
 </style>
 <button onclick="transition()">Update</button>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../static/js/d3.v3.min.js"></script>
 <script>
 
 var n = 20, // number of layers
@@ -89,4 +90,10 @@ function bumpLayer(n) {
 
 </script>
 </head>
+
+<body>
+  {{ proj }} idfjofs <br>
+  {{ staticstuff }} isdfjidosjfidosfio idsjof j <br>
+  {% static "js/d3.v3.min.js" %} djisofjidsofjdois <br>
+  </body>
 </html>
