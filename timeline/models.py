@@ -44,4 +44,6 @@ class Transaction(models.Model):
     decorated_initials = models.TextField(null=True, blank=True)
 
     possible_duplicates = models.TextField(null=True, blank=True)
-
+    
+    class Meta:
+        ordering = ['manuscript_id']
