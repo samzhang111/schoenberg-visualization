@@ -1,3 +1,7 @@
+import os
+PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
+PROJECT_PATH = PROJECT_PATH + '/timeline/'
+MEDIA_ROOT = PROJECT_PATH + '/media/'
 # Django settings for sdbm project.
 
 DEBUG = True
@@ -100,13 +104,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'sdbm.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    PROJECT_PATH + '/templates/'
 )
+
+print PROJECT_PATH + '/templates/'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
