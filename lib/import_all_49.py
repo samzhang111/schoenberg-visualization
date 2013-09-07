@@ -28,7 +28,7 @@ with open('sdbm.csv', 'rb') as csvfile:
 	)
 
 	for row in spamreader:
-		if len(row) == 50:
+		if len(row) == 49:
 			trans = Transaction(
 				manuscript_id = row[0],
 				duplicate_ms = row[1],
@@ -70,7 +70,6 @@ with open('sdbm.csv', 'rb') as csvfile:
 				possible_duplicates = row[44],
 				cat_date = row[46],
 				buyer = row[47],
-				columns = row[49],
 				)
 			print trans.manuscript_id
 			trans.save()
