@@ -92,8 +92,8 @@ function bumpLayer(n) {
 </head>
 
 <body>
-  {{ proj }} idfjofs <br>
-  {{ staticstuff }} isdfjidosjfidosfio idsjof j <br>
-  {% static "js/d3.v3.min.js" %} djisofjidsofjdois <br>
-  </body>
+  {% for t in transactions %}
+  {{ t.manuscript_id }}
+  {% endfor %}
+</body>
 </html>
