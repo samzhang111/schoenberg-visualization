@@ -1,4 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 from timeline.views import HomeView
 
 
@@ -18,3 +20,5 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^home/$', HomeView.as_view(), name='home')
 )
+
+urlpatterns += staticfiles_urlpatterns()
