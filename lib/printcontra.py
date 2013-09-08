@@ -1,11 +1,14 @@
 from pprint import pprint
 import json
 
+# j contains the list of dictionaries
 f = open('contra.json', 'r')
 lines = f.read()
 j = json.loads(lines)
-print json.dumps(lines, indent=4)
-"""
-for line in lines:
-    pprint(line)
-"""
+dump = json.dumps(lines, indent=4)
+
+'''
+pp = pp.PrettyPrinter(indent=2)
+pp.pprint(j)
+
+'''
