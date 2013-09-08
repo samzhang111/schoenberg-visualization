@@ -16,6 +16,40 @@
   {%endcomment%}
 
 <script>
+
+function buildBubbles()
+{
+var width = thisObj.dWidth;
+var height = thisObj.dHeight;
+var maxSize=Math.min(width,height);
+
+var diameter = maxSize,
+format = d3.format(",d"),
+color = d3.scale.category20c();
+
+var bubble = d3.layout.pack()
+.sort(null)
+.size([diameter, diameter])
+.padding(1.5);
+
+
+var svg = d3.select(d3div).append("svg")
+.attr("width", diameter)
+.attr("height", diameter)
+.attr("class", "bubble");
+
+var col_names=glb["_json"]["legends"];
+var data=glb["_odata"];
+
+
+var dobj=[];
+for (var di=0;di<data[0].length;di++)
+{
+dobj.push({"key":di,"value":data[1][di]});
+}
+display_pack({children: dobj});
+}
+
     d3.select('body').append('svg')
         .attr('width', window.innerWidth)
         .attr('height', window.innerHeight);

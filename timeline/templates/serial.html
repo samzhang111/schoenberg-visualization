@@ -8,13 +8,14 @@
 <script src="../static/js/d3.v3.min.js"></script>
 <script type="text/javascript">
 {% autoescape off %}
-var transactions = {{ transactions }};
+var exchanges = {{ exchanges }};
+var manuscripts = {{ manuscripts }};
 {% endautoescape %}
 </script>
 </head>
 
 <body>
-<svg id="contradictions-chart" width="1200" height="500"></svg>
-{{ transactions }}
+{{ exchanges }}
+{{ manuscripts }}
 </body>
 </html>
