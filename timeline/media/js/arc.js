@@ -132,7 +132,7 @@ function renderContra() {
                 .sort(function (a, b) {
                     return (a == d) ? 1 : -1;
                 });
-
+                renderContra();
             d3.select('#selected')
                 .html(d.desc + '<br/><span class="subdued">' + d.refs.join(', ').substr(0, maxLength) + '</span>');
         })
@@ -259,7 +259,7 @@ function clip(min, value, max) {
 
 // Chooses a color for an arc from start to end
 function colorize(start, end) {
-    var color = 'crimson';
+    var color = '#F5D9A4';
     var distance;
 
     if (contraFilters.colorize == 'Rainbow') {
@@ -361,9 +361,9 @@ d3.json('../static/data/kjv.json', function (err, json) {
                 window.location = 'http://www.biblegateway.com/passage/?search=' + d.book + ' ' + chapterNum + '&version=KJV';
             })
             .on('mouseover', function (d) {
-                /*contraFilters.book = null;
+                contraFilters.book = null;
 contraFilters.chapter = getAbsoluteChapter(d.book + ' ' + d.chapter.name.split(' ')[1]);
-renderContra();*/
+renderContra();
                 d3.select('#selected')
                     .html(d.section + ' - ' + d.book + ' - ' + d.chapter.name + '<br/><span class="subdued">' + d.chapter.wordCount + ' words, ' + d.chapter.charCount + ' characters</span>');
             });
