@@ -3,7 +3,7 @@
 body {
 	margin: 0px;
 	/*background-color: #ebebeb;*/
-	background-color: #FFFFFF;
+	background-color: beige;
 }
 
 /* title */
@@ -46,6 +46,8 @@ body {
 	position: absolute;
 	top: 400px;
 	left: 0px;
+	font-family: Verdana;
+	font-size:14px;
 }
 
 .header {
