@@ -2,7 +2,8 @@
 
 body {
 	margin: 0px;
-	background-color: #ebebeb;
+	/*background-color: #ebebeb;*/
+	background-color: #FFFFFF;
 }
 
 /* title */
@@ -39,6 +40,12 @@ body {
 	font-family: Verdana, Tahoma, Arial;
 	text-align: center;
 	padding-top: 1px;
+}
+
+#selected {
+	position: absolute;
+	top: 400px;
+	left: 0px;
 }
 
 .header {
