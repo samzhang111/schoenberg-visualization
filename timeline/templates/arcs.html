@@ -3,14 +3,50 @@
 <meta charset="utf-8">
 <html>
 <head>
-<title>What?</title>
-
-<script src="../static/js/d3.v3.min.js", charset='utf-8'></script>
-<script src="../static/js/arc.js"></script>
+	<title>Provenance History for Rare Manuscripts	</title>
+	<link rel="stylesheet" type="text/css" href="../static/css/arcs.css">
+	<script src="../static/js/d3.v3.min.js", charset='utf-8'></script>
+	<script src="../static/js/arc.js"></script>
 </head>
 
-<body>
-<svg id="contradictions-chart" width="1200" height="500"></svg>
+<body >
+	<div id="title">Provenance History for Rare Manuscripts</div>
 
+	<!-- Filters -->
+	<div id="filters">
+		<h2 id="filters-header">FILTER MANUSCRIPTS BY:</h2>
+
+		<!-- Language -->
+		<div class="dropdown-and-header">
+			<label for="dropdown-language">Language: </label>
+			<!-- populate with dummy values for now. No way I'm hardcoding all those languages. -->
+			<select class="dropdown" id="dropdown-language">
+				<option value="french">French</option>
+				<option value="latin">Latin</option>
+				<option value="english">English</option>
+			</select>
+
+			
+		</div>
+
+		<!-- Language -->
+		<div class="dropdown-and-header">
+			<label for="dropdown-years">Starting year: </label>
+			<!-- populate with dummy values for now. No way I'm hardcoding all those languages. -->
+			<select class="dropdown" id="dropdown-years">
+				<option value="french">1600</option>
+				<option value="latin">1595</option>
+				<option value="english">1590</option>
+			</select>
+
+			
+		</div>
+
+	</div>
+
+
+
+	<svg id="contradictions-chart" width="1200" height="500" style="margin-left:auto; margin-right:auto; display:block;"></svg>
+	
 </body>
 </html>

@@ -1,4 +1,4 @@
-from pprint import pprint
+from pprint import pprint as pp
 import json
 
 # j contains the list of dictionaries
