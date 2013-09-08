@@ -3,6 +3,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from timeline.views import HomeView
 from timeline.views import ArcsView
+from timeline.views import SerialView
 
 
 # Uncomment the next two lines to enable the admin:
@@ -21,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^admin/$', include(admin.site.urls)),
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^arcs/$', ArcsView.as_view(), name='arcs'),
+    url(r'^serial/$', SerialView.as_view(), name='serial'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

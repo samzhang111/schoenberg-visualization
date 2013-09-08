@@ -67,14 +67,6 @@ class ArcsView(TemplateView):
         # Call the base implementation first to get a context
         context = super(ArcsView, self).get_context_data(**kwargs)
         transactions = Transaction.objects.filter(manuscript_id__lte='500')
-        """
-        lst = []
-
-        for transaction in transactions:
-            print transaction
-            lst.append(transaction.manuscript_id)
-        vals = transactions.values_list()
-        """
         context['staticstuff'] = STATIC_ROOT
         context['proj'] = PROJECT_PATH
         context['transactions'] = json.dumps(transactions, cls=MyEncoder)
@@ -88,10 +80,20 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(HomeView, self).get_context_data(**kwargs)
-        transactions = Transaction.objects().filter(manuscript_id__lte='500')
         # Add in a QuerySet of all the books
         context['staticstuff'] = STATIC_ROOT
-        context['proj'] = PROJECT_PATH
-        context['transactions'] = serializers.serialize("json", transactions)
+
+        return context
+
+class SerialView(TemplateView):
+    template_name = "serial.html"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(SerialView, self).get_context_data(**kwargs)
+        transactions = Transaction.objects().all()[:50]
+        # Add in a QuerySet of all the books
+        context['staticstuff'] = STATIC_ROOT
+        context['transactions'] = json.dumps(transactions, cls=MyEncoder)
 
         return context
