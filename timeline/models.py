@@ -46,7 +46,7 @@ class Manuscript(Document):
     decorated_initials = StringField(required=False)
     possible_duplicates = StringField(required=False)
 
-    exchanges = ListField(ReferenceField(Exchange), required=False)
+    exchanges = ListField(StringField(required=False), required=False)
 
 class Transaction(Document):
     buyer = StringField(required=False) 

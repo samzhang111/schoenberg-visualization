@@ -22,7 +22,8 @@ def extract_exchange(t):
         cat_lot_num = t.cat_lot_num,
         price = t.price,
         sold = t.sold,
-        comments = t.comments)
+        comments = t.comments
+        )
     return ex
 
 def extract_manuscript(t):
@@ -57,30 +58,33 @@ def extract_manuscript(t):
         mini = t.mini, 
         historiated_initials = t.historiated_initials, 
         decorated_initials = t.decorated_initials, 
-        possible_duplicates = t.possible_duplicates)
+        possible_duplicates = t.possible_duplicates,
+        exchanges = []
+        )
     return man
 
 
 for t in Transaction.objects()[1:]:
     man = extract_manuscript(t)
-    ex = [extract_exchange(t)]
+    exch = extract_exchange(t)
+    exch.save()
+    ex = [str(exch.id)]
     for dup_id in man.duplicate_ms.split(','):
         if dup_id == man.manuscript_id:
             continue
         try:
-            dup = Transaction.objects.get(manuscript_id = dup_id)
+            dup = Transaction.objects.get(manuscript_id=dup_id)
         except DoesNotExist:
             print dup_id, "DNE"
             continue
         print dup_id, "Exists"
         x = extract_exchange(dup)
         x.save()
-        ex.append(x)
+        ex.append(str(x.id))
+        print str(x.id)
         #Transaction.objects.delete(manuscript_id = dup_id)
     print man, ex
+    man.exchanges = ex
+    #print man.exchanges
     man.save()
-    if len(ex) != 0:
-        for x in ex:
-            lf = ListField(ReferenceField(x))
-            man.update(push__exchanges=lf)
         #man.exchanges = ex
