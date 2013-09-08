@@ -71,5 +71,5 @@ with open('sdbm.csv', 'rb') as csvfile:
 				cat_date = row[46],
 				buyer = row[47],
 				)
-			print trans.manuscript_id
+			#print trans.manuscript_id
 			trans.save()
