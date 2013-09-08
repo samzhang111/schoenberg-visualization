@@ -3,18 +3,18 @@
 body {
 	margin: 0px;
 	/*background-color: #ebebeb;*/
-	background-color: #FFFFFF;
+	background-color: #EEEEEE;
 }
 
 /* title */
 #title {
 	text-align: center;
 	float: center;
-	font-size: 25px;
+	font-size: 45px;
 	font-family: Optima;
 	color: #6d687a;
 	border-radius: 5px;
-	margin: 10px;
+	margin: 20px;
 }
 
 /* filters box */
@@ -42,16 +42,26 @@ body {
 	padding-top: 1px;
 }
 
+
+#info {
+	margin-top: 80px;
+}
+
 #selected {
 	position: absolute;
-	top: 400px;
-	left: 0px;
+	top: 580px;
+	left: 100px;
+	border: 1px #000 solid;
+	background: #EEEEEE;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding: 5px;
 }
 
 .header {
 	font-family: Verdana, Tahoma, Arial;
 	display: inline-block;
-	width: 60px;
+	width: 80px;
 }
 
 .dropdown {
@@ -59,7 +69,11 @@ body {
 	position: relative;
 }
 
-p, h3 {
+p, h2 {
 	line-height: 30px;
 	font-family: Verdana;
+}
+
+#analysis-header {
+	color: ;
 }

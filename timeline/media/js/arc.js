@@ -54,11 +54,11 @@ function getAbsoluteChapter(exchange_id) {
             return date - 1043;
         }
         else
-        return '1100'
+        return ''
     }
     else {
         //console.log(exchange);
-        return '1000';
+        return '';
     }
 
 }
@@ -158,8 +158,17 @@ function renderContra() {
                     return (a == d) ? 1 : -1;
                 });
                 renderContra();
-            d3.select('#selected')
-                .html(d.desc + '<br/><span class="subdued">' + d.refs.join(', ').substr(0, maxLength) + '</span>');
+var lst = [];
+                console.log('this is happening');
+                for(var i=0; i<d.refs.length; i++) {
+                    var ref = d.refs[i];
+                    var exchange = exchanges[ref];
+                    var date = getAbsoluteChapter(exchange);
+                    lst.push(date);
+                }
+                console.log(lst);
+                d3.select('#selected')
+                    .html(d.desc + ' - ' + ' <br/><span class="subdued">' + lst.join(',') + '</span>');
         })
         .each(function (d, i) {
             var group = d3.select(this);
@@ -253,8 +262,17 @@ function issueBarChart(selector, data) {
             })
             .on('mouseover', function (d, i) {
                 var testament = i >= 39 ? 'New Testament' : 'Old Testament';
+                var lst = [];
+                console.log('this is happening');
+                for(var i=0; i<d.refs.length; i++) {
+                    var ref = d.refs[i];
+                    var exchange = exchanges[ref];
+                    var date = getAbsoluteChapter(exchange);
+                    lst.append(date);
+                }
+                console.log(lst);
                 d3.select('#selected')
-                    .html(testament + ' - ' + d.name + ' - ' + d.verseCount + ' verses<br/><span class="subdued">' + d.refs.join(', ').substr(0, maxLength) + '</span>');
+                    .html(testament + ' - ' + d.name + ' - ' + d.verseCount + ' verses<br/><span class="subdued">' + lst.join(',') + '</span>');
             });
 
     element.selectAll('text')
