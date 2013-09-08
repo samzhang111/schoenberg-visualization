@@ -41,7 +41,7 @@ function getAbsoluteChapter(verse) {
 
     var chapter = bookToChapter[parts[1]];
     chapter = (chapter === undefined) ? bookToChapter[parts[1] + 's'] : chapter;
-    console.log(parts[1], bookToChapter[parts[1]]);
+    //console.log(parts[1], bookToChapter[parts[1]]);
     return chapter + parseInt(parts[2]);
 }
 
@@ -144,7 +144,7 @@ function renderContra() {
                 for (x = 0; x <= Math.min(maxArcs, d.refs.length - 2); x++) {
                     var start = getAbsoluteChapter(d.refs[x]);
                     var end = getAbsoluteChapter(d.refs[x + 1]);
-                    console.log(d.refs[x], start);
+                    //console.log(d.refs[x], start);
 
                     if (start > end) {
                         var tmp = end;
@@ -320,7 +320,7 @@ d3.select('#langSelect')
 d3.json('../static/data/kjv.json', function (err, json) {
     //if (err) { console.log(err); }
     bData = json;
-    console.log(bData);
+    //console.log(bData);
     var bookSelect = d3.select('#book-select');
     var chapters = [];
     var chapterCount = 0;
