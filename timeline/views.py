@@ -9,6 +9,50 @@ import json
 import pprint as pp
 #from django.utils import simplejson
 
+class ManuEncoder(json.JSONEncoder):
+    def encode_object(self, obj):
+        return {
+            'id':unicode(obj.id),
+            'duplicate_ms': obj.duplicate_ms,
+            'manuscript_id': obj.manuscript_id,
+            'date': obj.date,
+
+            'desc': obj.title,
+            'url': "balls",
+            'refs': obj.exchanges
+        };
+
+    def default(self, obj):
+        if hasattr(obj, '__iter__'):
+            return [ self.encode_object(x) for x in obj ]
+            #return { str(x.id): self.encode_object(x) for x in obj }
+        else:
+            return self.encode_object(obj)
+
+class ExchEncoder(json.JSONEncoder):
+    def encode_object(self, obj):
+        return {
+            'id':unicode(obj.id),
+            'buyer': obj.buyer,
+            'seller': obj.seller,
+            'seller_2': obj.seller_2,
+            'cat_date': obj.cat_date,
+            'institution': obj.institution,
+            'catalogue_id': obj.catalogue_id,
+            'cat_lot_num': obj.cat_lot_num,
+            'price': obj.price,
+            'sold': obj.sold,
+            'comments': obj.comments
+        };
+
+    def default(self, obj):
+        if hasattr(obj, '__iter__'):
+            #return [ self.encode_object(x) for x in obj ]
+            return { str(x.id): self.encode_object(x) for x in obj }
+        else:
+            return self.encode_object(obj)
+
+
 class ManuscriptEncoder(json.JSONEncoder):
     def encode_object(self, obj):
         return {
@@ -84,10 +128,11 @@ class ArcsView(TemplateView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(ArcsView, self).get_context_data(**kwargs)
-        transactions = Transaction.objects.filter(manuscript_id__lte='500')
-        context['staticstuff'] = STATIC_ROOT
-        context['proj'] = PROJECT_PATH
-        context['transactions'] = json.dumps(transactions, cls=MyEncoder)
+        manuscripts = Manuscript.objects().all()[:1000]
+        exchanges = Exchange.objects().all()[:1000]
+        # Add in a QuerySet of all the books
+        context['manuscripts'] = json.dumps(manuscripts, cls=ManuEncoder)
+        context['exchanges'] = json.dumps(exchanges, cls=ExchEncoder)
 
         return context
 
@@ -113,7 +158,7 @@ class SerialView(TemplateView):
         exchanges = Exchange.objects().all()[:500]
         # Add in a QuerySet of all the books
         context['staticstuff'] = STATIC_ROOT
-        context['manuscripts'] = json.dumps(manuscripts, cls=ManuscriptEncoder)
-        context['exchanges'] = json.dumps(exchanges, cls=ExchangeEncoder)
+        context['manuscripts'] = json.dumps(manuscripts, cls=ManuEncoder)
+        context['exchanges'] = json.dumps(exchanges, cls=ExchEncoder)
 
         return context

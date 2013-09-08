@@ -36,16 +36,40 @@ function newTab() {
     return (window.event && ((event.which == 1 && (event.ctrlKey === true || event.metaKey === true) || (event.which == 2))));
 }
 
-function getAbsoluteChapter(verse) {
-    var parts = /^(\d?\s?[a-z]+)[\s.:]*(\d*):?(\d*)[-]?(\d*)/i.exec(verse);
+//var mindate = 2013;
 
-    var chapter = bookToChapter[parts[1]];
-    chapter = (chapter === undefined) ? bookToChapter[parts[1] + 's'] : chapter;
-    //console.log(parts[1], bookToChapter[parts[1]]);
-    return chapter + parseInt(parts[2]);
+function getAbsoluteChapter(exchange_id) {
+    //return the year
+    var exchange = exchanges[exchange_id];
+    if (exchange) {
+        var date = exchange.cat_date;
+        //console.log(date);
+        date = date.substr(0,4);
+        date = parseInt(date);
+        if (date > 1000 && date <= 2013) {
+            /*
+            if (date < mindate) {
+                mindate = date;
+            }*/
+            return date - 1043;
+        }
+        else
+        return '0'
+    }
+    else {
+        //console.log(exchange);
+        return '2013';
+    }
+
 }
 
+
+
 function renderContra() {
+
+
+
+
     var chart = d3.select('#contradictions-chart')
         .selectAll('.arc')
         .data(contra.filter(function (d) {
@@ -56,7 +80,8 @@ function renderContra() {
                 found = false;
 
                 for (i = 0; i <= Math.min(d.refs.length - 1, 10); i++) {
-                    if (getAbsoluteChapter(d.refs[i]) == contraFilters.chapter) {
+                    var year = getAbsoluteChapter(d.refs[i]);
+                    if (year == contraFilters.chapter) {
                         found = true;
                         break;
                     }
@@ -317,68 +342,61 @@ d3.select('#langSelect')
             }
         }
     });
-d3.json('../static/data/kjv.json', function (err, json) {
-    //if (err) { console.log(err); }
-    bData = json;
-    //console.log(bData);
-    var bookSelect = d3.select('#book-select');
-    var chapters = [];
-    var chapterCount = 0;
-    for (var x = 0; x < json.sections.length; x++) {
-        for (var y = 0; y < json.sections[x].books.length; y++) {
-            bookSelect.append('option')
-                .text(json.sections[x].books[y].shortName);
-            bookToChapter[json.sections[x].books[y].shortName] = chapterCount;
-            bookToChapterCount[json.sections[x].books[y].shortName] = 0;
-            for (var z = 0; z < json.sections[x].books[y].chapters.length; z++) {
-                chapterCount++;
-                chapters.push({
-                    section: json.sections[x].name,
-                    book: json.sections[x].books[y].shortName,
-                    chapter: json.sections[x].books[y].chapters[z]
-                });
-                bookToChapterCount[json.sections[x].books[y].shortName]++;
-            }
-        }
-    }
-    var svg = d3.select('#contradictions-chart');
-    
-    svg.selectAll('rect')
-        .data(chapters)
-        .enter().append('rect')
-            .attr('class', function (d, i) {
-                var testament = d.section == 'New Testament' ? 'nt' : '';
-                var book = 'b' + d.book.replace(/\s+/g, '').toLowerCase();
 
-                return testament + ' ' + book;
-            })
-            .attr('x', function (d, i) {return i;})
-            .attr('y', 400)
-            .attr('width', 1)
-            .attr('height', function (d, i) {return d.chapter.relativeLength * 100;})
-            .on('click', function (d) {
-                var chapterNum = parseInt(d.chapter.name.split(' ')[1]);
-                window.location = 'http://www.biblegateway.com/passage/?search=' + d.book + ' ' + chapterNum + '&version=KJV';
-            })
-            .on('mouseover', function (d) {
-                contraFilters.book = null;
-contraFilters.chapter = getAbsoluteChapter(d.book + ' ' + d.chapter.name.split(' ')[1]);
-renderContra();
-                d3.select('#selected')
-                    .html(d.section + ' - ' + d.book + ' - ' + d.chapter.name + '<br/><span class="subdued">' + d.chapter.wordCount + ' words, ' + d.chapter.charCount + ' characters</span>');
-            });
+
+var svg = d3.select('#contradictions-chart');
+
+//dfdsfffffffffffffffffffffffffffffffffffffffff
+
+var chapters = [];
+for (var i=0; i< 2014; i++) {
+    chapters[i] = 0;
+}
+
+for (var con in manuscripts) {
+    manu = manuscripts[con];
+    var exchs = manu.refs;
+    for (var i=0; i<exchs.length; i++) {
+        var exch = exchs[i];
+        var date = getAbsoluteChapter(exch);
+        chapters[date]++;
+        console.log(date);
+    }
+    //console.log(exch);
+}
+
+svg.selectAll('rect').data(chapters).enter()
+    .append('rect')
+        .attr('x', function(d, i) {
+            return i;
+        })
+        .attr('y', 400)
+        .attr('width',1)
+        .attr('height', function(d, i) {
+            return chapters[i];
+        });
+
+
+
+
+
 
     if (window._contradictions !== undefined) {
         contra = _contradictions;
 
         renderContra();
     } else {
-        d3.json('../static/data/contra.json', function (err, json) {
-            contra = json;
-
-            renderContra();
-        });
+        contra = manuscripts;
+        renderContra();
     }
+
+
+
+
+
+
+
+
 
     var typeSelect = d3.select('#type-select');
 
@@ -401,7 +419,9 @@ renderContra();
 
             renderContra();
         });
-});
+
+
+
 
 // ------------------------------------------
 

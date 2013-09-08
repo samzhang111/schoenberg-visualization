@@ -5,8 +5,14 @@
 <head>
 	<title>Provenance History for Rare Manuscripts	</title>
 	<link rel="stylesheet" type="text/css" href="../static/css/arcs.css">
+	<script type="text/javascript">
+	{% autoescape off %}
+	var exchanges = {{ exchanges }};
+	var manuscripts = {{ manuscripts }};
+	{% endautoescape %}
+	</script>
 	<script src="../static/js/d3.v3.min.js", charset='utf-8'></script>
-	<script src="../static/js/arc.js"></script>
+
 </head>
 
 <body >
@@ -46,5 +52,6 @@
 
 	<svg id="contradictions-chart" width="1200" height="500" style="margin-left:auto; margin-right:auto; display:block;"></svg>
 	
+	<script src="../static/js/arc.js"></script>
 </body>
 </html>
