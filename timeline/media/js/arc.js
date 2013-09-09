@@ -158,7 +158,7 @@ function renderContra() {
                     return (a == d) ? 1 : -1;
                 });
                 renderContra();
-var lst = [];
+                var lst = [];
                 console.log('this is happening');
                 for(var i=0; i<d.refs.length; i++) {
                     var ref = d.refs[i];
@@ -367,7 +367,7 @@ d3.select('#langSelect')
 var svg = d3.select('#contradictions-chart');
 
 var chapters = [];
-for (var i=0; i< 2014; i++) {
+for (var i=0; i < 2014; i++) {
     chapters[i] = 0;
 }
 
