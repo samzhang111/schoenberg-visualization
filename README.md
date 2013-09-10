@@ -1,5 +1,8 @@
 Schoenberg Visualization Project
 =====
+
+Deployed at: http://schoenberg.herokuapp.com/arcs
+
 PennApps Fall 2013
 -----
 
