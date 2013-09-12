@@ -54,11 +54,11 @@ function getAbsoluteChapter(exchange_id) {
             return date - 1043;
         }
         else
-        return ''
+        return 0;
     }
     else {
         //console.log(exchange);
-        return '';
+        return 0;
     }
 
 }
@@ -164,9 +164,12 @@ function renderContra() {
                     var ref = d.refs[i];
                     var exchange = exchanges[ref];
                     var date = getAbsoluteChapter(exchange);
-                    lst.push(date);
+                    if (date===0) {
+                    }
+                    else {
+                        lst.push(date);
+                    }
                 }
-                console.log(lst);
                 d3.select('#selected')
                     .html(d.desc + ' - ' + ' <br/><span class="subdued">' + lst.join(',') + '</span>');
         })
@@ -192,7 +195,6 @@ function renderContra() {
                         var path = 'M ' + start + ',399 A ' + r + ',' + ry + ' 0 0,1 ' + end + ',399 ';
                         group.append('path')
                             .attr('d', path)
-                            .attr('fill-opacity', 0)
                             .style('stroke', function (start, end) {
                                 return colorize(start, end);
                             }(start, end));
@@ -270,7 +272,6 @@ function issueBarChart(selector, data) {
                     var date = getAbsoluteChapter(exchange);
                     lst.append(date);
                 }
-                console.log(lst);
                 d3.select('#selected')
                     .html(testament + ' - ' + d.name + ' - ' + d.verseCount + ' verses<br/><span class="subdued">' + lst.join(',') + '</span>');
             });
