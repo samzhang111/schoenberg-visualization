@@ -163,10 +163,10 @@ function renderContra() {
                     lst.push(date);
                 }
             }
-        }
+            d3.select(this).selectAll('path')
+            .style('stroke', function() { return '#111111'; })
 
-        d3.select(this).selectAll('path')
-            .style('stroke', function() { return '#111111'; });
+
 
         var disp_text = d.desc +
             '<br />Manuscript id: ' + d.manuscript_id;
