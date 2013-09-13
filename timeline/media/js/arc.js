@@ -13,6 +13,11 @@ var contraFilters = {
     colorize: 'Rainbow' /* Colorize the arcs */
 };
 
+var color = d3.scale.ordinal().range(colorbrewer['Blues'][9]);
+
+function schoen_url(man_id) {
+    return "http://dla.library.upenn.edu/dla/schoenberg/record.html?id=SCHOENBERG_" + man_id
+}
 if (!window.maxArcs) {
     var maxArcs = 10;
 }
@@ -31,11 +36,6 @@ var contraTypeFilters = {
     'Other': null
 };
 
-// Returns true if a new tab should be opened from a click
-function newTab() {
-    return (window.event && ((event.which == 1 && (event.ctrlKey === true || event.metaKey === true) || (event.which == 2))));
-}
-
 //var mindate = 2013;
 
 function getAbsoluteChapter(exchange_id) {
@@ -43,11 +43,11 @@ function getAbsoluteChapter(exchange_id) {
     var exchange = exchanges[exchange_id];
     if (exchange) {
         var date = exchange.cat_date;
-        //console.log(date);
         date = date.substr(0,4);
         date = parseInt(date);
         if (date > 1000 && date <= 2013) {
             /*
+            
             if (date < mindate) {
                 mindate = date;
             }*/
@@ -66,8 +66,6 @@ function getAbsoluteChapter(exchange_id) {
 
 
 function renderContra() {
-
-
 
 
     var chart = d3.select('#contradictions-chart')
@@ -141,47 +139,52 @@ function renderContra() {
     chart.enter().append('g')
         .attr('class', 'arc')
         .on('click', function (d) {
-            var url = '/' + slugg(d.desc) + '-sab.html';
-            //var url = 'http://www.skepticsannotatedbible.com/contra/' + d.url;
-
+            var url = schoen_url(d.manuscript_id);
             // Handle [cmd/ctrl]+click and middle click to open a new tab
-            if (newTab()) {
-                window.open(url);
-            } else {
-                window.location = url;
-            }
+            window.open(url, "_blank");
         })
         .on('mouseover', function (d) {
-            d3.select('#contradictions-chart')
+            /*d3.select('#contradictions-chart')
                 .selectAll('.arc')
                 .sort(function (a, b) {
                     return (a == d) ? 1 : -1;
                 });
                 renderContra();
+                console.log(d);
                 var lst = [];
-                console.log('this is happening');
-                for(var i=0; i<d.refs.length; i++) {
-                    var ref = d.refs[i];
-                    var exchange = exchanges[ref];
-                    var date = getAbsoluteChapter(exchange);
-                    if (date===0) {
-                    }
-                    else {
-                        lst.push(date);
-                    }
+                */
+            for(var i=0; i<d.refs.length; i++) {
+                var ref = d.refs[i];
+                var exchange = exchanges[ref];
+                var date = getAbsoluteChapter(exchange);
+                if (date===0) {
                 }
-                d3.select('#selected')
-                    .html(d.desc + ' - ' + ' <br/><span class="subdued">' + lst.join(',') + '</span>');
+                else {
+                    lst.push(date);
+                }
+            }
+        }
+
+        d3.select(this).selectAll('path')
+            .style('stroke', function() { return '#111111'; });
+
+        var disp_text = d.desc +
+            '<br />Manuscript id: ' + d.manuscript_id;
+        d3.select('#selected')
+            .html(disp_text);
         })
+        .on('mouseout', function(d) {
+                
+                d3.select(this).selectAll('path')
+                    .style('stroke', function() { return color(getAbsoluteChapter[d.date]); } )
+            })
         .each(function (d, i) {
             var group = d3.select(this);
-
             if (d.refs.length > 1) {
                 // Only show up to 10 refs, some have over 100...
                 for (x = 0; x <= Math.min(maxArcs, d.refs.length - 2); x++) {
                     var start = getAbsoluteChapter(d.refs[x]);
                     var end = getAbsoluteChapter(d.refs[x + 1]);
-                    //console.log(d.refs[x], start);
 
                     if (start > end) {
                         var tmp = end;
@@ -196,7 +199,7 @@ function renderContra() {
                         group.append('path')
                             .attr('d', path)
                             .style('stroke', function (start, end) {
-                                return colorize(start, end);
+                                return color(start);
                             }(start, end));
                     }
                 }
@@ -256,11 +259,7 @@ function issueBarChart(selector, data) {
             .on('click', function (d, i) {
                 var url = 'http://www.skepticsannotatedbible.com/' + d.url;
 
-                if (newTab()) {
-                    window.open(url);
-                } else {
-                    window.location = url;
-                }
+                window.open(url, "_blank");
             })
             .on('mouseover', function (d, i) {
                 var testament = i >= 39 ? 'New Testament' : 'Old Testament';
@@ -372,14 +371,13 @@ for (var i=0; i < 2014; i++) {
     chapters[i] = 0;
 }
 
-for (var con in manuscripts) {
-    manu = manuscripts[con];
+for (var i=0; i < manuscripts.length; i++) {
+    manu = manuscripts[i];
     var exchs = manu.refs;
-    for (var i=0; i<exchs.length; i++) {
-        var exch = exchs[i];
+    for (var j=0; j<exchs.length; j++) {
+        var exch = exchs[j];
         var date = getAbsoluteChapter(exch);
         chapters[date]++;
-        console.log(date);
     }
 }
 
@@ -393,11 +391,11 @@ svg.selectAll('rect').data(chapters).enter()
         .attr('height', function(d, i) {
             return chapters[i];
         })
-            .on('mouseover', function (d) {
-                renderContra();
-                d3.select('#selected')
-                    .html(chapters[d]);
-            });
+        .on('mouseover', function (d) {
+            renderContra();
+            d3.select('#selected')
+                .html(d);
+        });
 
 
 var text = svg.selectAll('text').data(chapters).enter()
@@ -407,8 +405,8 @@ var text = svg.selectAll('text').data(chapters).enter()
         })
         .attr('y', 440)
         .text(function(d, i) {
-            console.log(i);
-            if (i%50==0) {
+            //console.log(i);
+            if (i%50==7) {
                 return i + 1043;
             }
             else {
