@@ -2,3 +2,6 @@
 *.swp
 *.log
 *.csv
+
+Procfile
+settings.py

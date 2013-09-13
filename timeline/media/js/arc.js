@@ -54,11 +54,11 @@ function getAbsoluteChapter(exchange_id) {
             return date - 1043;
         }
         else
-        return ''
+        return 0;
     }
     else {
         //console.log(exchange);
-        return '';
+        return 0;
     }
 
 }
@@ -150,25 +150,28 @@ function renderContra() {
                     return (a == d) ? 1 : -1;
                 });
                 renderContra();
-                */
                 console.log(d);
                 var lst = [];
-                for(var i=0; i<d.refs.length; i++) {
-                    var ref = d.refs[i];
-                    var exchange = exchanges[ref];
-                    var date = getAbsoluteChapter(exchange);
-                    if (date != "") {
-                        console.log(d, date);
-                        lst.push(date);
-                    }
+                */
+            for(var i=0; i<d.refs.length; i++) {
+                var ref = d.refs[i];
+                var exchange = exchanges[ref];
+                var date = getAbsoluteChapter(exchange);
+                if (date===0) {
                 }
-                d3.select(this).selectAll('path')
-                    .style('stroke', function() { return '#111111'; });
+                else {
+                    lst.push(date);
+                }
+            }
+        }
 
-                var disp_text = d.desc +
-                    '<br />Manuscript id: ' + d.manuscript_id;
-                d3.select('#selected')
-                    .html(disp_text);
+        d3.select(this).selectAll('path')
+            .style('stroke', function() { return '#111111'; });
+
+        var disp_text = d.desc +
+            '<br />Manuscript id: ' + d.manuscript_id;
+        d3.select('#selected')
+            .html(disp_text);
         })
         .on('mouseout', function(d) {
                 
@@ -195,7 +198,6 @@ function renderContra() {
                         var path = 'M ' + start + ',399 A ' + r + ',' + ry + ' 0 0,1 ' + end + ',399 ';
                         group.append('path')
                             .attr('d', path)
-                            .attr('fill-opacity', 0)
                             .style('stroke', function (start, end) {
                                 return color(start);
                             }(start, end));
@@ -269,7 +271,6 @@ function issueBarChart(selector, data) {
                     var date = getAbsoluteChapter(exchange);
                     lst.append(date);
                 }
-                console.log(lst);
                 d3.select('#selected')
                     .html(testament + ' - ' + d.name + ' - ' + d.verseCount + ' verses<br/><span class="subdued">' + lst.join(',') + '</span>');
             });
@@ -366,7 +367,7 @@ d3.select('#langSelect')
 var svg = d3.select('#contradictions-chart');
 
 var chapters = [];
-for (var i=0; i< 2014; i++) {
+for (var i=0; i < 2014; i++) {
     chapters[i] = 0;
 }
 

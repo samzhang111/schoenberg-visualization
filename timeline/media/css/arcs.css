@@ -76,3 +76,14 @@ p, h2 {
 #analysis-header {
 	color: Blue;
 }
+
+.arc path {
+    stroke: 'crimson';
+    stroke-width: 1;
+    fill: none;
+}
+
+.arc path:hover {
+	cursor: pointer;
+    stroke: 'pink';
+}
