@@ -67,12 +67,12 @@ function getAbsoluteChapter(exchange_id) {
 
 function renderContra() {
 
-
+    console.log(manuscripts);
     var chart = d3.select('#contradictions-chart')
         .selectAll('.arc')
-        .data(contra.filter(function (d) {
+        .data(manuscripts);
+        /*.filter(function (d) {
             var i, found, match;
-
             // Filter out items that don't touch this chapter
             if (contraFilters.chapter !== null) {
                 found = false;
@@ -135,7 +135,7 @@ function renderContra() {
         function (d) {
             return d.desc;
         });
-
+*/
     chart.enter().append('g')
         .attr('class', 'arc')
         .on('click', function (d) {
@@ -182,7 +182,7 @@ function renderContra() {
                 for (x = 0; x <= Math.min(maxArcs, d.refs.length - 2); x++) {
                     var start = getAbsoluteChapter(d.refs[x]);
                     var end = getAbsoluteChapter(d.refs[x + 1]);
-
+                    console.log(start, end);
                     if (start > end) {
                         var tmp = end;
                         end = start;
