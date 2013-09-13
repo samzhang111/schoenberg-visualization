@@ -9,7 +9,6 @@ body {
 /* title */
 #title {
 	text-align: center;
-	float: center;
 	font-size: 45px;
 	font-family: Optima;
 	color: #6d687a;
@@ -53,7 +52,7 @@ body {
 	left: 100px;
 	border: 1px #000 solid;
 	background: #EEEEEE;
-	-moz-border-radius: 5px;
+	-moz-border-radius: 5px 5px;
 	border-radius: 5px;
 	padding: 5px;
 }
@@ -75,5 +74,5 @@ p, h2 {
 }
 
 #analysis-header {
-	color: ;
+	color: Blue;
 }

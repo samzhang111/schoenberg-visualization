@@ -63,8 +63,11 @@ def extract_manuscript(t):
         )
     return man
 
+cursor = Transaction.objects().all()
+cursor.timeout(False)
 
-for t in Transaction.objects()[1:]:
+for t in cursor:
+
     man = extract_manuscript(t)
     exch = extract_exchange(t)
     exch.save()
@@ -73,7 +76,7 @@ for t in Transaction.objects()[1:]:
         if dup_id == man.manuscript_id:
             continue
         try:
-            dup = Transaction.objects.get(manuscript_id=dup_id)
+            dup = Transaction.objects().get(manuscript_id=dup_id)
         except DoesNotExist:
             print dup_id, "DNE"
             continue

@@ -68,8 +68,8 @@ with open('sdbm.csv', 'rb') as csvfile:
 				historiated_initials = row[35],
 				decorated_initials = row[35],
 				possible_duplicates = row[44],
-				cat_date = row[46],
-				buyer = row[47],
+				cat_date = row[47],
+				buyer = row[48],
 				columns = row[49],
 				)
 			print trans.manuscript_id
