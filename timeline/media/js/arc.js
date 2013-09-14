@@ -67,10 +67,9 @@ function getAbsoluteChapter(exchange_id) {
 
 function renderContra() {
 
-    console.log(manuscripts);
     var chart = d3.select('#contradictions-chart')
         .selectAll('.arc')
-        .data(manuscripts);
+        .data(exchanges);
         /*.filter(function (d) {
             var i, found, match;
             // Filter out items that don't touch this chapter
@@ -163,7 +162,7 @@ function renderContra() {
                     lst.push(date);
                 }
             }
-        }
+        });
 
         d3.select(this).selectAll('path')
             .style('stroke', function() { return '#111111'; });
@@ -171,39 +170,38 @@ function renderContra() {
         var disp_text = d.desc +
             '<br />Manuscript id: ' + d.manuscript_id;
         d3.select('#selected')
-            .html(disp_text);
-        })
-        .on('mouseout', function(d) {
+            .html(disp_text)
+            .on('mouseout', function(d) {
                 
                 d3.select(this).selectAll('path')
                     .style('stroke', function() { return color(getAbsoluteChapter[d.date]); } )
             })
-        .each(function (d, i) {
-            var group = d3.select(this);
-            if (d.refs.length > 1) {
-                // Only show up to 10 refs, some have over 100...
-                for (x = 0; x <= Math.min(maxArcs, d.refs.length - 2); x++) {
-                    var start = getAbsoluteChapter(d.refs[x]);
-                    var end = getAbsoluteChapter(d.refs[x + 1]);
-                    console.log(start, end);
-                    if (start > end) {
-                        var tmp = end;
-                        end = start;
-                        start = tmp;
-                    }
+            .each(function (d, i) {
+                console.log(i, d);
+                var group = d3.select(this);
+                if (d.refs.length > 1) {
+                    // Only show up to 10 refs, some have over 100...
+                    for (x = 0; x <= Math.min(maxArcs, d.refs.length - 2); x++) {
+                        var start = getAbsoluteChapter(d.refs[x]);
+                        var end = getAbsoluteChapter(d.refs[x + 1]);
+                        if (start > end) {
+                            var tmp = end;
+                            end = start;
+                            start = tmp;
+                        }
 
-                    var r = (end - start) * 0.51;
-                    var ry = Math.min(r, 490);
-                    if (!isNaN(start) && !isNaN(end) && !isNaN(r) && !isNaN(ry)) {
-                        var path = 'M ' + start + ',399 A ' + r + ',' + ry + ' 0 0,1 ' + end + ',399 ';
-                        group.append('path')
-                            .attr('d', path)
-                            .style('stroke', function (start, end) {
-                                return color(start);
-                            }(start, end));
+                        var r = (end - start) * 0.51;
+                        var ry = Math.min(r, 490);
+                        if (!isNaN(start) && !isNaN(end) && !isNaN(r) && !isNaN(ry)) {
+                            var path = 'M ' + start + ',399 A ' + r + ',' + ry + ' 0 0,1 ' + end + ',399 ';
+                            group.append('path')
+                                .attr('d', path)
+                                .style('stroke', function (start, end) {
+                                    return color(start);
+                                }(start, end));
+                        }
                     }
                 }
-            }
         });
 
     chart.exit()
