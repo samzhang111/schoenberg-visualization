@@ -14,35 +14,35 @@
 	<script src="../static/js/d3.v3.min.js", charset='utf-8'></script>
 	<script src="../static/js/colorbrewer.v1.min.js", charset='utf-8'></script>
 </head>
-
-
-<body>
-	<div id="selected">selected</div>
+<body >
+	<div id="selected">This box will display information when you mouse over the graph</div>
 	<div id="title" style="height: 100%">Provenance History for Rare Manuscripts</div>
 	<svg id="contradictions-chart" width="1200px" height="500px" style="margin-left:auto; margin-right:auto; display:block;"></svg>
 	
-	<div style="margin: 3%" id="info">
+	<div style="margin: 10%" id="info">
 
 		<h2 class="analysis-header">What kind of data are displayed?</h2>
 
 		<p>The data shown here represent the manuscripts catalogued in the Schoenberg Database of Manuscripts.
-			This database is an enormous,<br/> publically-available repository of texts available prior to 1600.
-		We offer a novel perspective on the relationships underlying these<br/> data through their visual presentation,
+			This database is an enormous, publicly-available repository of texts available prior to 1600.
+		We offer a novel perspective on the relationships underlying these data through their visual presentation,
 		in addition to a glimpse of the manuscripts' journey throughout history.</p>
 
 
+        <br />
 		<hr/>
-
+        <br />
 			<h2 class="analysis-header">What does this graph tell us?</h2>
 
 			<p>A single path originates from a point and ends at another point. Such a path represents the exchange of a 
-				manuscript between two parties.<br/> Multiple paths for a single manuscript indicate that this text has changed
+				manuscript between two parties. Multiple paths for a single manuscript indicate that this text has changed
 				hands multiple times.</p>
 
-			<p>A blue line descending from a point represents the nubmer of exchanges for a particular manuscript. This
-				quantity goes hand in hand with <br/>the paths spanning the journey of the same manuscript.</p>
+			<p>A line descending from a point represents the nubmer of exchanges for a particular manuscript. This
+				quantity goes hand in hand with the paths spanning the journey of the same manuscript.</p>
 	</div>
 	<script src="../static/js/arc.js"></script>
+<!--	<script xlink:href=="../static/js/SVGPan.js"></script>-->
 </body>
 </html>
 			<!-- Filters -->

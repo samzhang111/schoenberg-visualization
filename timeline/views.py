@@ -66,7 +66,7 @@ class ManuscriptEncoder(json.JSONEncoder):
             'current_location': obj.current_location,
             'author': obj.author,
             'author_variant': obj.author_variant,
-            'title': obj.title,
+            'desc': obj.title,
             'language': obj.language,
             'material': obj.material,
             'place': obj.place,
@@ -90,30 +90,7 @@ class ManuscriptEncoder(json.JSONEncoder):
             'decorated_initials': obj.decorated_initials,
             'possible_duplicates': obj.possible_duplicates,
 
-            'exchanges': obj.exchanges
-        };
-
-    def default(self, obj):
-        if hasattr(obj, '__iter__'):
-            #return [ self.encode_object(x) for x in obj ]
-            return { str(x.id): self.encode_object(x) for x in obj }
-        else:
-            return self.encode_object(obj)
-
-class ExchangeEncoder(json.JSONEncoder):
-    def encode_object(self, obj):
-        return {
-            'id':unicode(obj.id),
-            'buyer': obj.buyer,
-            'seller': obj.seller,
-            'seller_2': obj.seller_2,
-            'cat_date': obj.cat_date,
-            'institution': obj.institution,
-            'catalogue_id': obj.catalogue_id,
-            'cat_lot_num': obj.cat_lot_num,
-            'price': obj.price,
-            'sold': obj.sold,
-            'comments': obj.comments
+            'refs': obj.exchanges
         };
 
     def default(self, obj):
@@ -184,8 +161,9 @@ class ArcsView(TemplateView):
         exchanges = Exchange.objects().all()[:5000]
         # Add in a QuerySet of all the books
         context['manuscripts'] = json.dumps(manuscripts, cls=ManuEncoder)
+        context['manlen'] = len(context['manuscripts'])
         context['exchanges'] = json.dumps(exchanges, cls=ExchEncoder)
-
+        context['exlen'] = len(context['exchanges'])
         return context
 
 
