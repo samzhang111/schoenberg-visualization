@@ -25,20 +25,17 @@ function getAbsoluteChapter(exchange_id) {
     if (exchange) {
         var date = exchange.cat_date;
         date = date.substr(0,4);
-        date = parseInt(date);
-        if (date > 1000 && date <= 2013) {
-            /*
-            
-            if (date < mindate) {
-                mindate = date;
-            }*/
-            return date - 1043;
+        var timeline_date = parseInt(date);
+        if (timeline_date > 1000 && timeline_date <= 2013) {
+            return timeline_date - 1043;
         }
-        else
-        return 0;
+        else {
+            console.log("Corrupted database entry cat_date = " + date);
+            return 500;
+        }
     }
     else {
-        //console.log(exchange);
+        console.log("Exchange not found error: " + exchange);
         return 0;
     }
 
@@ -149,7 +146,7 @@ for (var i=0; i < man_array.length; i++) {
     for (var j=0; j<exchs.length; j++) {
         var exch = exchs[j];
         var date = getAbsoluteChapter(exch);
-        console.log(date, exch);
+        //console.log(date, exch);
         chapters[date]++;
     }
 }
