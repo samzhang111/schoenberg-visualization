@@ -68,7 +68,6 @@ function render() {
 
             d3.select('#selected')
                 .html(disp_text);
-
         })
         .on('mouseout', function (d, i) {
             var group = d3.select(this);
