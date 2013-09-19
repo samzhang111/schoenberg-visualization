@@ -3,6 +3,11 @@ var bookToChapter = {};
 var bookToChapterCount = {};
 var maxLength = 250;
 
+//vart start_date = 1043
+var mag_factor = 3.7;
+var start_date = 1700;
+var end_date = 2020;
+
 var color = d3.scale.ordinal().range(colorbrewer['YlOrBr'][9]);
 
 function schoen_url(man_id) {
@@ -26,17 +31,17 @@ function getAbsoluteChapter(exchange_id) {
         var date = exchange.cat_date;
         date = date.substr(0,4);
         var timeline_date = parseInt(date);
-        if (timeline_date > 1000 && timeline_date <= 2013) {
-            return timeline_date - 1043;
+        if (timeline_date > start_date && timeline_date <= end_date) {
+            return mag_factor*(timeline_date - start_date);
         }
         else {
             console.log("Corrupted database entry cat_date = " + date);
-            return 500;
+            return '';
         }
     }
     else {
         console.log("Exchange not found error: " + exchange);
-        return 0;
+        return '';
     }
 
 }
@@ -139,7 +144,7 @@ function render() {
 var svg = d3.select('#viewport');
 
 var chapters = [];
-for (var i=0; i < 2014; i++) {
+for (var i=0; i < end_date-start_date; i++) {
     chapters[i] = 0;
 }
 
@@ -148,7 +153,7 @@ for (var i=0; i < man_array.length; i++) {
     var exchs = manu.refs;
     for (var j=0; j<exchs.length; j++) {
         var exch = exchs[j];
-        var date = getAbsoluteChapter(exch);
+        var date = getAbsoluteChapter(exch)-start_date;
         //console.log(date, exch);
         chapters[date]++;
     }
@@ -157,7 +162,7 @@ for (var i=0; i < man_array.length; i++) {
 svg.selectAll('rect').data(chapters).enter()
     .append('rect')
         .attr('x', function(d, i) {
-            return i;
+            return i*mag_factor;
         })
         .attr('y', 400)
         .attr('width',2)
@@ -165,7 +170,6 @@ svg.selectAll('rect').data(chapters).enter()
             return chapters[i];
         })
         .on('mouseover', function (d) {
-            render();
             d3.select('#selected')
                 .html(d);
             d3.select(this)
@@ -180,13 +184,13 @@ svg.selectAll('rect').data(chapters).enter()
 var text = svg.selectAll('text').data(chapters).enter()
     .append('text')
         .attr('x', function(d, i) {
-            return i;
+            return i*mag_factor;
         })
         .attr('y', 440)
         .text(function(d, i) {
             //console.log(i);
-            if (i%50==7/* && i+1043 < 1670*/) {
-                return i + 1043;
+            if (i%20==0/* && i+start_date < 1670*/) {
+                return i + start_date;
             }
             else {
                 return ""
