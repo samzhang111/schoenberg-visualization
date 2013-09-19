@@ -161,7 +161,7 @@ class ArcsView(TemplateView):
         # Call the base implementation first to get a context
         context = super(ArcsView, self).get_context_data(**kwargs)
         manuscripts = Manuscript.objects().all()[:5000]
-        exchanges = Exchange.objects().all()[:10000]
+        exchanges = Exchange.objects().all()[:5000]
         # Add in a QuerySet of all the books
         context['manuscripts'] = json.dumps(manuscripts, cls=ManuEncoder)
         #context['manlen'] = len(context['manuscripts'])
