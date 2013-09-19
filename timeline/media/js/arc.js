@@ -69,7 +69,26 @@ function render() {
             d3.select('#selected')
                 .html(disp_text);
 
-            render();
+        })
+        .on('mouseout', function (d, i) {
+            var group = d3.select(this);
+            if (d.refs.length > 1) {
+                for (x = 0; x <= Math.min(maxArcs, d.refs.length - 2); x++) {
+                    var start = getAbsoluteChapter(d.refs[x]);
+                    var end = getAbsoluteChapter(d.refs[x + 1]);
+
+                    if (start > end) {
+                        var tmp = end;
+                        end = start;
+                        start = tmp;
+                    }
+
+                    if (!isNaN(start) && !isNaN(end)) {
+                    d3.select(this).selectAll('path')
+                        .style('stroke', function() { return color(getAbsoluteChapter(start)); } );
+                    }
+                }
+            }
         })
         .each(function (d, i) {
             var group = d3.select(this);
@@ -92,7 +111,7 @@ function render() {
                         group.append('path')
                             .attr('d', path)
                             .style('stroke', function (start, end) {
-                                return color(end);
+                                return color(start);
                             }(start, end));
                     }
                 }
