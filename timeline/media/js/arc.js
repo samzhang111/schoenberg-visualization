@@ -8,7 +8,7 @@ var mag_factor = 3.7;
 var start_date = 1700;
 var end_date = 2021;
 
-var color = d3.scale.ordinal().range(colorbrewer['YlOrBr'][9]);
+var color = d3.scale.ordinal().range(colorbrewer['PuBu'][9]);
 
 function schoen_url(man_id) {
     return "http://dla.library.upenn.edu/dla/schoenberg/record.html?id=SCHOENBERG_" + man_id
@@ -71,6 +71,7 @@ function render() {
 
             var disp_text = 'Title: ' +  d.desc +
                 '<br />Manuscript id: ' + d.manuscript_id +
+                '<br />Language: ' + d.language +
                 '<br />Date: ' + d.date;
 
             d3.select('#selected')
