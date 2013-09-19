@@ -82,10 +82,6 @@ p, h2 {
 	font-family: Verdana;
 }
 
-#analysis-header {
-	color: Blue;
-}
-
 .arc path {
     stroke-width: 1;
     fill: none;
