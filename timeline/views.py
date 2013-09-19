@@ -17,8 +17,11 @@ class ManuEncoder(json.JSONEncoder):
             'duplicate_ms': obj.duplicate_ms,
             'manuscript_id': obj.manuscript_id,
             'date': obj.date,
+            'current_location': obj.current_location,
+            'language': obj.language,
 
             'desc': obj.title,
+            'author': obj.author,
             'url': "balls",
             'refs': obj.exchanges
         };
@@ -158,12 +161,10 @@ class ArcsView(TemplateView):
         # Call the base implementation first to get a context
         context = super(ArcsView, self).get_context_data(**kwargs)
         manuscripts = Manuscript.objects().all()[:5000]
-        exchanges = Exchange.objects().all()[:5000]
+        exchanges = Exchange({'collection':'exchange_with_cat_dates'}).objects().all()[:5000]
         # Add in a QuerySet of all the books
         context['manuscripts'] = json.dumps(manuscripts, cls=ManuEncoder)
-        context['manlen'] = len(context['manuscripts'])
         context['exchanges'] = json.dumps(exchanges, cls=ExchEncoder)
-        context['exlen'] = len(context['exchanges'])
         return context
 
 
@@ -188,6 +189,7 @@ class SerialView(TemplateView):
         context = super(SerialView, self).get_context_data(**kwargs)
         manuscripts = Manuscript.objects().all()[:2000]
         exchanges = Exchange.objects().all()[:2000]
+        #exchanges = Exchange.objects().all()[:2000]
         # Add in a QuerySet of all the books
         context['staticstuff'] = STATIC_ROOT
         context['manuscripts'] = json.dumps(manuscripts, cls=ManuscriptEncoder)

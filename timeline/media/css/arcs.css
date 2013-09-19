@@ -1,7 +1,7 @@
 /* arcs.css */
 
 html {
-  background: url(../data/Paper5.jpg) no-repeat center center fixed; 
+  background: url(../data/Paper6.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -57,10 +57,9 @@ body {
 
 #selected {
 	position: absolute;
-	top: 580px;
-	left: 100px;
+	top: 680px;
+	left: 300px;
 	border: 1px #000 solid;
-	background: #EEEEEE;
 	-moz-border-radius: 5px 5px;
 	border-radius: 5px;
 	padding: 5px;

@@ -4,7 +4,7 @@ from mongoengine import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.dummy', #'django_mongodb_engine', # # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'schoenberg_vis',                      # Or path to database file if using sqlite3.
+        'NAME': 'schoenberg-bson',                      # Or path to database file if using sqlite3.
         'USER': 'schoenberg_vis',                      # Not used with sqlite3.
         'PASSWORD': 'Swarthmore',                  # Not used with sqlite3.
         'HOST': 'ds045057.mongolab.com',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -13,7 +13,7 @@ DATABASES = {
 }
 
 connect(
-    'schoenberg-bson',
+    DATABASES['default']['NAME'],
     host=DATABASES['default']['HOST'],
     port=int(DATABASES['default']['PORT']),
     username=DATABASES['default']['USER'],
