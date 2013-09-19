@@ -60,11 +60,6 @@ function render() {
             window.open(url, "_blank");
         })
         .on('mouseover', function (d) {
-            d3.select('#viewport')
-                .selectAll('.arc')
-                .sort(function (a, b) {
-                    return (a == d) ? 1 : -1;
-                });
             
             d3.select(this).selectAll('path')
             .style('stroke', function() { return '#111111'; });
@@ -76,7 +71,7 @@ function render() {
         })
         .on('mouseout', function(d) {
             d3.select(this).selectAll('path')
-            .style('stroke', function() { return color(getAbsoluteChapter[d.manuscript_id]); } )
+                .style('stroke', function() { return color(getAbsoluteChapter(d.refs[0]); } )
         })
         .each(function (d, i) {
             var group = d3.select(this);
@@ -112,37 +107,23 @@ function render() {
             .style('opacity', 0)
         .remove();
 */
-
+/*
     // Update any highlighting from filters
     d3.select('#viewport').selectAll('rect')
         .classed('selected', false);
 
-
-}
-
-
-// Chooses a color for an arc from start to end
-function colorize(start, end) {
-    var color = '#F5D9A4';
-    var distance;
-
-    if (contraFilters.colorize == 'Rainbow') {
-        distance = Math.abs(end - start);
-        color = d3.hsl(distance / 1189 * 360, 0.7, 0.35);
+    if (contraFilters.book !== null) {
+        d3.select('#viewport').selectAll('.b' + contraFilters.book.replace(/\s+/g, '').toLowerCase())
+            .classed('selected', true);
     }
-
-    return color;
+*/
 }
-
-
-d3.select('#selected').transition().delay(7000).duration(1000).style('opacity', 1.0);
-
 
 
 var svg = d3.select('#viewport');
 
 var chapters = [];
-for (var i=0; i < 2015; i++) {
+for (var i=0; i < 2014; i++) {
     chapters[i] = 0;
 }
 
