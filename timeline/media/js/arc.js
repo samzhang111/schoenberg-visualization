@@ -160,7 +160,7 @@ svg.selectAll('rect').data(chapters).enter()
             return i;
         })
         .attr('y', 400)
-        .attr('width',1)
+        .attr('width',2)
         .attr('height', function(d, i) {
             return chapters[i];
         })
@@ -168,6 +168,12 @@ svg.selectAll('rect').data(chapters).enter()
             render();
             d3.select('#selected')
                 .html(d);
+            d3.select(this)
+            .style('fill', function() { return '#AAAAAA'; });
+        })
+        .on('mouseout', function (d) {
+            d3.select(this)
+            .style('fill', function() { return '#000000'; });
         });
 
 

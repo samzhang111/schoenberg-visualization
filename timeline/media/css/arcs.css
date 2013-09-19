@@ -57,13 +57,12 @@ body {
 
 #selected {
 	position: absolute;
-	top: 580px;
+	top: 590px;
 	left: 100px;
-	border: 1px #000 solid;
-	background: #EEEEEE;
 	-moz-border-radius: 5px 5px;
 	border-radius: 5px;
 	padding: 5px;
+	margin: 10px;
 }
 
 .header {
