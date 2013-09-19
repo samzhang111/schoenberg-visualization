@@ -76,6 +76,9 @@ function render() {
                     lst.push(exchange);
                 }
             }*/
+            
+            d3.select(this).selectAll('path')
+            .style('stroke', function() { return '#111111'; })
         
             var disp_text = d.desc + '<br />Manuscript id: ' + d.manuscript_id;
 
@@ -171,7 +174,7 @@ svg.selectAll('rect').data(chapters).enter()
 var text = svg.selectAll('text').data(chapters).enter()
     .append('text')
         .attr('x', function(d, i) {
-            return i*1.5;
+            return i;
         })
         .attr('y', 440)
         .text(function(d, i) {
