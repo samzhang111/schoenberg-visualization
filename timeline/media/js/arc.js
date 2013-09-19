@@ -83,14 +83,13 @@ function render() {
             window.open(url, "_blank");
         })
         .on('mouseover', function (d) {
-            /*d3.select('#viewport')
+            d3.select('#viewport')
                 .selectAll('.arc')
                 .sort(function (a, b) {
                     return (a == d) ? 1 : -1;
                 });
-                render();
-                console.log(d);
-                */
+            render();
+                //console.log(d);
             /*
             var lst = [];
             for(var i=0; i<d.refs.length; i++) {
@@ -99,15 +98,14 @@ function render() {
                     lst.push(exchange);
                 }
             }*/
+            
+            d3.select(this).selectAll('path')
+            .style('stroke', function() { return '#111111'; })
         
             var disp_text = d.desc + '<br />Manuscript id: ' + d.manuscript_id;
 
             d3.select('#selected')
                 .html(disp_text);
-        })
-        .on('mouseout', function(d) {
-            d3.select(this).selectAll('path')
-                .style('stroke', function() { return color(getAbsoluteChapter[d.refs.length-2]); } )
         })
         .each(function (d, i) {
             var group = d3.select(this);
@@ -143,16 +141,12 @@ function render() {
             .style('opacity', 0)
         .remove();
 */
-/*
+
     // Update any highlighting from filters
     d3.select('#viewport').selectAll('rect')
         .classed('selected', false);
 
-    if (contraFilters.book !== null) {
-        d3.select('#viewport').selectAll('.b' + contraFilters.book.replace(/\s+/g, '').toLowerCase())
-            .classed('selected', true);
-    }
-*/
+
 }
 
 
@@ -196,6 +190,7 @@ d3.select('#contra-notice')
     .transition()
         .style('display', 'none');
 
+/*
 d3.select('#langSelect')
     .on('change', function () {
         var lang = this.value;
@@ -216,14 +211,14 @@ d3.select('#langSelect')
             }
         }
     });
-
+*/
 
 
 
 var svg = d3.select('#viewport');
 
 var chapters = [];
-for (var i=0; i < 2014; i++) {
+for (var i=0; i < 2015; i++) {
     chapters[i] = 0;
 }
 
@@ -258,7 +253,7 @@ svg.selectAll('rect').data(chapters).enter()
 var text = svg.selectAll('text').data(chapters).enter()
     .append('text')
         .attr('x', function(d, i) {
-            return i*1.5;
+            return i;
         })
         .attr('y', 440)
         .text(function(d, i) {
