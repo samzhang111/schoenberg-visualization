@@ -20,7 +20,7 @@ body {
 	text-align: center;
 	font-size: 45px;
 	font-family: Optima;
-	color: #6d687a;
+	color: #000000;
 	border-radius: 5px;
 	margin: 20px;
 }
@@ -57,12 +57,12 @@ body {
 
 #selected {
 	position: absolute;
-	top: 590px;
-	left: 100px;
+	top: 400px;
+	/*left: 150px;*/
 	-moz-border-radius: 5px 5px;
 	border-radius: 5px;
 	padding: 5px;
-	margin: 10px;
+	margin: 10%;
 }
 
 .header {
@@ -89,4 +89,17 @@ p, h2 {
 .arc path:hover {
 	cursor: pointer;
     stroke: #FFFFFF;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -5em;
+}
+
+.footer, .push {
+    text-align: center;
+    height: 5em;
+    
 }

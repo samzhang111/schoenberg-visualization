@@ -6,7 +6,7 @@ var maxLength = 250;
 //vart start_date = 1043
 var mag_factor = 3.7;
 var start_date = 1700;
-var end_date = 2020;
+var end_date = 2021;
 
 var color = d3.scale.ordinal().range(colorbrewer['YlOrBr'][9]);
 
@@ -69,7 +69,9 @@ function render() {
             d3.select(this).selectAll('path')
             .style('stroke', function() { return '#111111'; });
 
-            var disp_text = d.desc + '<br />Manuscript id: ' + d.manuscript_id;
+            var disp_text = 'Title: ' +  d.desc +
+                '<br />Manuscript id: ' + d.manuscript_id +
+                '<br />Date: ' + d.date;
 
             d3.select('#selected')
                 .html(disp_text);
@@ -89,7 +91,7 @@ function render() {
 
                     if (!isNaN(start) && !isNaN(end)) {
                     d3.select(this).selectAll('path')
-                        .style('stroke', function() { return color(getAbsoluteChapter(start)); } );
+                        .style('stroke', function() { return color(d.language); } );
                     }
                 }
             }
@@ -115,7 +117,7 @@ function render() {
                         group.append('path')
                             .attr('d', path)
                             .style('stroke', function (start, end) {
-                                return color(start);
+                                return color(d.language);
                             }(start, end));
                     }
                 }
@@ -153,7 +155,7 @@ for (var i=0; i < man_array.length; i++) {
     var exchs = manu.refs;
     for (var j=0; j<exchs.length; j++) {
         var exch = exchs[j];
-        var date = getAbsoluteChapter(exch)-start_date;
+        var date = getAbsoluteChapter(exch-start_date);
         //console.log(date, exch);
         chapters[date]++;
     }
@@ -164,14 +166,26 @@ svg.selectAll('rect').data(chapters).enter()
         .attr('x', function(d, i) {
             return i*mag_factor;
         })
-        .attr('y', 400)
+        .attr('y', function(d, i) {
+            if (i%50==0) {
+                return 385;
+            }
+            else {
+                return 400;
+            }
+        })
         .attr('width',2)
         .attr('height', function(d, i) {
-            return chapters[i];
+            if (i%50==0) {
+                return 30;
+            }
+            if (i%5==0) {
+                return 15;  //chapters[i];
+            }
+            console.log(chapters[i]);
         })
+        /*
         .on('mouseover', function (d) {
-            d3.select('#selected')
-                .html(d);
             d3.select(this)
             .style('fill', function() { return '#AAAAAA'; });
         })
@@ -179,14 +193,14 @@ svg.selectAll('rect').data(chapters).enter()
             d3.select(this)
             .style('fill', function() { return '#000000'; });
         });
-
+        */
 
 var text = svg.selectAll('text').data(chapters).enter()
     .append('text')
         .attr('x', function(d, i) {
             return i*mag_factor;
         })
-        .attr('y', 440)
+        .attr('y', 400)
         .text(function(d, i) {
             //console.log(i);
             if (i%20==0/* && i+start_date < 1670*/) {
