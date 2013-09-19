@@ -60,18 +60,16 @@ function render() {
             window.open(url, "_blank");
         })
         .on('mouseover', function (d) {
-            
+
             d3.select(this).selectAll('path')
             .style('stroke', function() { return '#111111'; });
-        
+
             var disp_text = d.desc + '<br />Manuscript id: ' + d.manuscript_id;
 
             d3.select('#selected')
                 .html(disp_text);
-        })
-        .on('mouseout', function(d) {
-            d3.select(this).selectAll('path')
-                .style('stroke', function() { return color(getAbsoluteChapter(d.refs[0]); } )
+
+            render();
         })
         .each(function (d, i) {
             var group = d3.select(this);
@@ -94,7 +92,7 @@ function render() {
                         group.append('path')
                             .attr('d', path)
                             .style('stroke', function (start, end) {
-                                return color(start);
+                                return color(end);
                             }(start, end));
                     }
                 }

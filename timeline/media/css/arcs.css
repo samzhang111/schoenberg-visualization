@@ -87,12 +87,11 @@ p, h2 {
 }
 
 .arc path {
-    stroke: Black;
     stroke-width: 1;
     fill: none;
 }
 
 .arc path:hover {
 	cursor: pointer;
-    stroke: 'pink';
+    stroke: #FFFFFF;
 }
