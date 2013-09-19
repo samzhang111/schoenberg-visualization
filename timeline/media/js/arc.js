@@ -60,26 +60,10 @@ function render() {
             window.open(url, "_blank");
         })
         .on('mouseover', function (d) {
-            /*d3.select('#viewport')
-                .selectAll('.arc')
-                .sort(function (a, b) {
-                    return (a == d) ? 1 : -1;
-                });
-                render();
-                console.log(d);
-                */
-            /*
-            var lst = [];
-            for(var i=0; i<d.refs.length; i++) {
-                var exchange = exchanges[ref];
-                if ( exchange ) {
-                    lst.push(exchange);
-                }
-            }*/
-            
+
             d3.select(this).selectAll('path')
-            .style('stroke', function() { return '#111111'; })
-        
+            .style('stroke', function() { return '#111111'; });
+
             var disp_text = d.desc + '<br />Manuscript id: ' + d.manuscript_id;
 
             d3.select('#selected')
@@ -110,7 +94,7 @@ function render() {
                         group.append('path')
                             .attr('d', path)
                             .style('stroke', function (start, end) {
-                                return color(start);
+                                return color(end);
                             }(start, end));
                     }
                 }
