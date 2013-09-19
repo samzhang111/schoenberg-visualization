@@ -1,7 +1,7 @@
 /* arcs.css */
 
 html {
-  background: url('../data/Paper5.jpg') no-repeat center center fixed;
+  background: url(../data/Paper5.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
