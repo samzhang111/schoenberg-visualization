@@ -31,12 +31,12 @@ function getAbsoluteChapter(exchange_id) {
         }
         else {
             console.log("Corrupted database entry cat_date = " + date);
-            return 500;
+            return '';
         }
     }
     else {
         console.log("Exchange not found error: " + exchange);
-        return 0;
+        return '';
     }
 
 }
