@@ -84,7 +84,7 @@ function render() {
         })
         .on('mouseout', function(d) {
             d3.select(this).selectAll('path')
-                .style('stroke', function() { return color(getAbsoluteChapter[d.refs.length-2]); } )
+                .style('stroke', function() { return color(getAbsoluteChapter[d.refs[0]); } )
         })
         .each(function (d, i) {
             var group = d3.select(this);
